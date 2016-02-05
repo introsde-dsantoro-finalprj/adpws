@@ -1,0 +1,27 @@
+* Deployment
+** Requirements
+   This service uses external API. The relative api keys must me configured properly. See [[file:serviceSetup-example.sh][serviceSetup-example.sh]]
+   
+   External services used:
+   - http://developer.foodessentials.com
+** Instruction
+  1) Deploy on Heroku
+     #+BEGIN_EXAMPLE
+     heroku login
+     heroku create --stack cedar --buildpack https://github.com/IntroSDE/heroku-buildpack-ant.git
+     git push heroku master
+     heroku open
+     #+END_EXAMPLE
+  2) Server
+     #+BEGIN_EXAMPLE
+     ant install
+     ant start
+     #+END_EXAMPLE
+  3) Test client
+     #+BEGIN_EXAMPLE
+     export ADPWS_PORT=6904
+     export ADPWS_HOST=192.168.5.3
+     ant execute.test
+     #+END_EXAMPLE
+     
+     
