@@ -1,11 +1,12 @@
 package introsde.dsantoro.dao;
 
-import org.json.JSONObject;
+import java.util.Collection;
+import introsde.dsantoro.model.Meal;
 
 public interface AdpDao {
 
 	// Foodessentials adapter
-	public JSONObject searchMeals(String key, int start, int num);
+	public Collection<Meal> searchMeals(String key, int start, int num);
 
 	// XXXXXXXX adapter
 	public String getMotivationalPhrase();

@@ -35,7 +35,8 @@ public class FoodessentialsClient {
 	        .queryParam("v","2.00")
 	        .queryParam("api_key",apikey)
 	        .request().accept(MediaType.APPLICATION_JSON).get().readEntity(String.class);
-	        apisid = (String) new org.json.JSONObject(response).get("session_id");	        
+	        apisid = (String) new org.json.JSONObject(response).get("session_id");
+	        System.out.println("Foodessentials config: Got a session ID");
 		}
 		else {
 			System.out.println("Foodessentials config: Missing variable FOOD_APIKEY");

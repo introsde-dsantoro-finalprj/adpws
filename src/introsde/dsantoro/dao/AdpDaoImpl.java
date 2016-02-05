@@ -1,27 +1,41 @@
 package introsde.dsantoro.dao;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import introsde.dsantoro.foodessentials.FoodessentialsClient;
+import introsde.dsantoro.model.Meal;
 
 public class AdpDaoImpl implements AdpDao {
 
 	@Override
-	public JSONObject searchMeals(String key, int start, int num) {
+	public Collection<Meal> searchMeals(String key, int start, int num) {
+		List<Meal> meals = new ArrayList<Meal>();
 		FoodessentialsClient foodClient = new FoodessentialsClient();
 		JSONArray prodArray = foodClient.searchFoods(key, start, num).getJSONArray("productsArray");
-				
 		for (int i = 0 ; i < prodArray.length(); i++) {
-	        JSONObject obj = prodArray.getJSONObject(i);
-	        String prodName = obj.getString("product_name");
-	        String prodUpc = obj.getString("upc");
-	        obj = (JSONObject) getMeal(prodUpc).getJSONObject("product").getJSONArray("nutrients").getJSONObject(0);
-	        System.out.println(prodName);
-	        System.out.println(prodUpc);
-	        System.out.println(obj.getString("nutrient_value"));	        
+			String prodCalories = null;
+			String prodName = null;
+			try {
+				JSONObject obj = prodArray.getJSONObject(i);
+		        prodName = obj.getString("product_name");
+		        String prodUpc = obj.getString("upc");
+		        obj = (JSONObject) foodClient.getFood(prodUpc).getJSONObject("product").getJSONArray("nutrients").getJSONObject(0);		        		       
+		        if (obj.getString("nutrient_name").equals("Calories")) {
+		        	prodCalories = obj.getString("nutrient_value"); 
+		        }		        
+		     } catch (JSONException e) {
+		         throw new RuntimeException(e);
+		     }
+			Meal m = new Meal(prodName, prodCalories);
+			meals.add(m);			
 	    }
-		return null;
+		return meals;
 	}
 
 	@Override
@@ -29,11 +43,4 @@ public class AdpDaoImpl implements AdpDao {
 		// TODO Auto-generated method stub		
 		return null;
 	}
-	
-	private JSONObject getMeal(String mealId) {
-		FoodessentialsClient foodClient = new FoodessentialsClient();
-		return foodClient.getFood(mealId);
-//		return null;
-	}
-
 }

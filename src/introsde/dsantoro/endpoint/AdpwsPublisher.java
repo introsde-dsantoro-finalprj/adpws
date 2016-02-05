@@ -23,7 +23,7 @@ public class AdpwsPublisher {
             hostname = "localhost";
         }
 
-        URI BASE_URI = new URI(protocol + hostname + port+"sdelab/");
+        URI BASE_URI = new URI(protocol + hostname + port+"ws/adpws/");
 
         System.out.println("Starting sdelab standalone HTTP server...");
         JdkHttpServerFactory.createHttpServer(BASE_URI, createApp());
@@ -32,6 +32,6 @@ public class AdpwsPublisher {
 
     public static ResourceConfig createApp() {
         System.out.println("Starting sdelab REST services...");
-        return new MyApplicationConfig();
+        return new AdpwsConfig();
     }
 }

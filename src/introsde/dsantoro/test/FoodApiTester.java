@@ -6,7 +6,7 @@ public class FoodApiTester {
 	public static void main(String[] args) {
 		AdpDaoImpl adpDao = new AdpDaoImpl();
 		System.out.println(
-				adpDao.searchMeals("orange juice", 20, 2).toString()
+				adpDao.searchMeals("orange juice", 20, 2).size()
 				);
 		
 	}
