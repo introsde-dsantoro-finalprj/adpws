@@ -27,7 +27,8 @@ public class AdpDaoImpl implements AdpDao {
 		        String prodUpc = obj.getString("upc");
 		        obj = (JSONObject) foodClient.getFood(prodUpc).getJSONObject("product").getJSONArray("nutrients").getJSONObject(0);		        		       
 		        if (obj.getString("nutrient_name").equals("Calories")) {
-		        	prodCalories = obj.getString("nutrient_value"); 
+		        	prodCalories = obj.getString("nutrient_value").split("\\.")[0];
+		        	//prodCalories = prodCalories.split(".")[0];
 		        }		        
 		     } catch (JSONException e) {
 		         throw new RuntimeException(e);
