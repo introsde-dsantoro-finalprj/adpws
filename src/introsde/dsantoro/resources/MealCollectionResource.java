@@ -24,7 +24,6 @@ public class MealCollectionResource {
 	UriInfo uriInfo;
 	@Context
 	Request request;
-	String id;
 	
 	@GET
 	@Produces({MediaType.TEXT_XML, MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
